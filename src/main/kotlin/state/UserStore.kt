@@ -20,4 +20,6 @@ object UserStore {
     }
 
     fun getAllUsers(): List<User> = users.values.toList() // For debugging (optional)
+
+    fun findUser(email: String): User? = getAllUsers().find { it.email == email }
 }

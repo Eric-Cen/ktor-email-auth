@@ -1,15 +1,15 @@
-package com.example
+package com.example.routes
 
 import com.example.model.AuthRequest
+import com.example.model.AuthResponse
+import com.example.state.JwtConfig
 import com.example.state.UserStore
 import com.example.utils.isValidEmail
 import com.example.utils.isValidPassword
-import io.ktor.server.request.receive
+import io.ktor.server.request.*
 import io.ktor.server.response.*
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.route
-import io.ktor.server.routing.post
-import io.ktor.http.HttpStatusCode
+import io.ktor.server.routing.*
+import io.ktor.http.*
 
 fun Route.authRoutes() {
 
@@ -26,7 +26,8 @@ fun Route.authRoutes() {
                     )
                 }
                 if (UserStore.addUser(request.email, request.password)) {
-                    call.respond(HttpStatusCode.Created, "User registered successfully")
+                    val token = JwtConfig.generateToken(request.email)
+                    call.respond(AuthResponse(token))
                 } else {
                     call.respond(HttpStatusCode.Conflict, "User already exists")
                 }
@@ -39,7 +40,8 @@ fun Route.authRoutes() {
             try {
                 val request = call.receive<AuthRequest>()
                 if (UserStore.validateUser(request.email, request.password)) {
-                    call.respond(HttpStatusCode.OK, "Login successful")
+                    val token = JwtConfig.generateToken(request.email)
+                    call.respond(AuthResponse(token))
                 } else {
                     call.respond(HttpStatusCode.Unauthorized, "Invalid credentials")
                 }
