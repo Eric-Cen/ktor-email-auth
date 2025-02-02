@@ -2,13 +2,16 @@
 explore ktor backend with GraphQL
 
 ### TODO
-1. add JWT authentication
-2. add interactions with Postgresql
-3. add GraphQL
-4. add interactions with GraphQL
+
+1. add interactions with Postgresql
+2. add GraphQL
+3. add interactions with GraphQL
+4. add unit tests
+5. add integration tests
 
 ### Completed
 1. basic email and password signup and login
+2. add JWT authentication
 
 
 This project was created using the [Ktor Project Generator](https://start.ktor.io).
