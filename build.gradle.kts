@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
+    implementation(libs.ktor.server.status.pages)
 
     implementation(libs.org.mindrot.jbcrypt)
 
