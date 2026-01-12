@@ -7,6 +7,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -45,7 +46,10 @@ fun Application.module() {
     }
 
     install(ContentNegotiation) {
-        json()
+        json(Json{
+            prettyPrint = true // set to false to reduce bandwidth in production
+            isLenient = false
+        })
     }
 
     configureHTTP()
