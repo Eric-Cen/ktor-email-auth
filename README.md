@@ -2,12 +2,12 @@
 explore ktor backend with GraphQL
 
 ### TODO
-
-1. add interactions with Postgresql
-2. add GraphQL
-3. add interactions with GraphQL
-4. add unit tests
-5. add integration tests
+1. go over ktor tutorials, https://ktor.io/docs/server-create-a-new-project.html
+2. add interactions with Postgresql
+3. add GraphQL
+4. add interactions with GraphQL
+5. add unit tests
+6. add integration tests
 
 ### Completed
 1. basic email and password signup and login
@@ -36,7 +36,53 @@ Here's a list of features included in this project:
 
 ## Building & Running
 
-To build or run the project, use one of the following tasks:
+### Quick Start (Recommended)
+
+#### Development Setup (One-time)
+1. **Copy environment template:**
+   ```bash
+   cp .env-sample .env.development
+   ```
+
+2. **Edit `.env.development`** and set:
+   ```bash
+   LOG_LEVEL=DEBUG
+   PORT=8080
+   ```
+
+3. **Configure IntelliJ IDEA:**
+   - Run → Edit Configurations
+   - Find your "EngineMain" configuration
+   - In "Environment variables" field, browse to your `.env.development` file
+   - Click OK
+
+4. **Run the application:**
+   - Just click the green ▶️ Run button in IntelliJ
+   - Or use: `./gradlew run`
+
+#### Production Testing Setup
+1. **Copy environment template:**
+   ```bash
+   cp .env-sample .env
+   ```
+
+2. **Edit `.env`** with your production values:
+   ```bash
+   LOG_LEVEL=INFO
+   PORT=8080
+   JWT_SECRET=your-production-secret
+   # Add other production secrets...
+   ```
+
+3. **Run with production environment:**
+   ```bash
+   # Load .env and run
+   export $(cat .env | xargs) && ./gradlew run
+   ```
+
+### Manual Commands
+
+To build or run the project manually, use one of the following tasks:
 
 | Task                          | Description                                                          |
 | -------------------------------|---------------------------------------------------------------------- |
@@ -54,3 +100,36 @@ If the server starts successfully, you'll see the following output:
 2024-12-04 14:32:45.584 [main] INFO  Application - Application started in 0.303 seconds.
 2024-12-04 14:32:45.682 [main] INFO  Application - Responding at http://0.0.0.0:8080
 ```
+
+## Environment Variables
+
+The application uses the following environment variables:
+
+| Variable    | Description                    | Default | Development | Production |
+|-------------|--------------------------------|---------|-------------|------------|
+| `LOG_LEVEL` | Logging level (DEBUG/INFO/WARN) | INFO    | DEBUG       | INFO       |
+| `PORT`      | Server port                    | 8080    | 8080        | 8080       |
+
+### Environment Files
+
+- **`.env-sample`** - Template with all available environment variables (committed)
+- **`.env.development`** - Your development environment variables (gitignored)
+- **`.env`** - Your production/testing environment variables (gitignored)
+
+### Setup Instructions
+
+1. **For Development:**
+   ```bash
+   cp .env-sample .env.development
+   # Edit .env.development with LOG_LEVEL=DEBUG
+   # Configure IntelliJ to use this file (one-time setup)
+   ```
+
+2. **For Production Testing:**
+   ```bash
+   cp .env-sample .env
+   # Edit .env with your production secrets
+   # Run: export $(cat .env | xargs) && ./gradlew run
+   ```
+
+**Note:** All `.env*` files except `.env-sample` are gitignored to protect your secrets.

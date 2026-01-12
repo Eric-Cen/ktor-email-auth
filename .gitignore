@@ -1,4 +1,10 @@
 **/.DS_Store
+
+# dotenv environment variables file
+.env*
+!.env-sample
+!.env.development
+
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar

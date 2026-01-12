@@ -37,6 +37,7 @@ fun Application.configureRouting() {
     routing {
         staticResources("/content", "mycontent")
         staticResources("/task-ui", "task-ui")
+        staticResources("/static", "static")
 
         get("/") {
             call.respondText("Hello World!")
@@ -139,9 +140,16 @@ fun Application.configureRouting() {
                 }
             }
 
+            get("/json") {
+                val tasks = TaskRepository.allTasks()
+                application.log.info("==> get(/json), tasks.size=${tasks.size}")
+                call.respond(tasks)
+            }
+
             post("/json") {
                 try {
                     val task = call.receive<Task>()
+                    application.log.debug("==> get(/json), task={}", task)
 
                     if (task.name.isEmpty() || task.description.isEmpty()) {
                         call.respond(HttpStatusCode.BadRequest, "Missing required fields")
@@ -154,6 +162,21 @@ fun Application.configureRouting() {
                     call.respond(HttpStatusCode.BadRequest, "Invalid JSON format")
                 } catch (e: IllegalArgumentException) {
                     call.respond(HttpStatusCode.BadRequest, e.message ?: "Invalid data")
+                }
+            }
+
+            delete("/{taskName}") {
+                val name = call.parameters["taskName"]
+                if (name == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@delete
+                }
+
+                val removed = TaskRepository.removeTask(name)
+                if (!removed) {
+                    call.respond(HttpStatusCode.NotFound)
+                } else {
+                    call.respond(HttpStatusCode.NoContent)
                 }
             }
         }

@@ -22,6 +22,9 @@ ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", versio
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
 org-mindrot-jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt-version"}
 
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
+
+
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
