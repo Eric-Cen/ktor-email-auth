@@ -2,7 +2,7 @@ openapi: "3.0.3"
 info:
   title: "Application API"
   description: "Application API"
-  version: "1.0.0"
+  version: "3.0.3"
 servers:
   - url: "http://localhost:8080"
 paths:

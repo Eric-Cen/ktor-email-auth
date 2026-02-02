@@ -8,7 +8,7 @@ object JwtConfig {
     private const val SECRET = "your_secret_key" //TODO Store securely in environment variables
     private const val ISSUER = "ktor.io"
     private const val AUDIENCE = "ktor-users"
-    private const val EXPIRATION_TIME = 36_000_00 * 24 // 24 hours
+    private const val EXPIRATION_TIME = 36_000_00 * 2 // 2 hours
 
     private val algorithm = Algorithm.HMAC256(SECRET)
 

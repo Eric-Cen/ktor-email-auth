@@ -7,13 +7,28 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.plugins.calllogging.CallLogging
+import io.ktor.server.request.httpMethod
+import io.ktor.server.request.path
 import kotlinx.serialization.json.Json
+import org.slf4j.event.Level
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
 }
 
 fun Application.module() {
+    install(CallLogging) {
+        level = Level.DEBUG
+        format { call ->
+            val status = call.response.status()
+            val httpMethod = call.request.httpMethod.value
+            val route = call.request.path()
+            val userAgent = call.request.headers["User-Agent"]
+            "$httpMethod $route, Status: $status, User agent: $userAgent"
+        }
+    }
+
     install(Authentication) {
         jwt("auth-jwt") {
             realm = "ktor-auth"
@@ -39,7 +54,8 @@ fun Application.module() {
             validate { credential ->
                 val email = credential.payload.getClaim("email").asString()
                 if (UserStore.findUser(email) != null) {
-                    UserIdPrincipal(email)
+                    //UserIdPrincipal(email) // Simple - just store email
+                    JWTPrincipal(credential.payload) // Store entire JWT
                 } else null
             }
         }

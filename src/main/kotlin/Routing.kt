@@ -180,16 +180,5 @@ fun Application.configureRouting() {
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-        // Example of official Swagger UI integration
-        swaggerUI(path = "swagger", swaggerFile = "openapi/documentation.yaml")
     }
 }
